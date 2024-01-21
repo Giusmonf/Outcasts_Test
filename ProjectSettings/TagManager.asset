@@ -11,9 +11,9 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
+  - Interactables
+  - Player
+  - Wall
   - 
   - 
   - 
@@ -41,6 +41,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Objects
+    uniqueID: 1022794203
+    locked: 0
   - name: Characters
     uniqueID: 3424259121
+    locked: 0
+  - name: UI
+    uniqueID: 1626311723
     locked: 0
