@@ -8,6 +8,7 @@ public class EnemyPatrol : MonoBehaviour
     private Rigidbody2D rb;
     [SerializeField] private Animator animator;
     [SerializeField] private FieldOfView fieldOfView;
+    [SerializeField] private CollidingFieldOfView collisionFieldOfView;
 
     [SerializeField] private Vector2 targetDestination = Vector2.zero;
     [SerializeField] private Vector2 targetDirection = Vector2.zero;
@@ -28,6 +29,7 @@ public class EnemyPatrol : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        collisionFieldOfView = GetComponent<CollidingFieldOfView>();
     }
 
     private void Start()
@@ -82,7 +84,9 @@ public class EnemyPatrol : MonoBehaviour
         isIdle = false;
 
         fieldOfView.SetAimDirection(RotateVector2(targetDirection, 90));
-        fieldOfView.SetOrigin(Vector3.zero);
+        fieldOfView.SetOrigin(Vector2.zero);
+        fieldOfView.SetEnemyPosition(transform.localPosition);
+        collisionFieldOfView.aimDirection = targetDirection;
     }
 
     private Vector2 RotateVector2(Vector2 vec, float angle)

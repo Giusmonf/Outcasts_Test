@@ -11,11 +11,19 @@ public class FieldOfView : MonoBehaviour
     private Vector3 origin = Vector3.zero;
     private float startingAngle;
 
+    [SerializeField] private Vector3 vertex;
+    [SerializeField] private Vector3 enemyPosition;
+
     private void Start()
     {
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
         fov = 90f;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawRay(origin, vertex);
     }
 
     private void LateUpdate()
@@ -36,18 +44,7 @@ public class FieldOfView : MonoBehaviour
 
         for (int i = 0; i <= raycount; i++)
         {
-            Vector3 vertex = origin + GetVectorFromAngle(angle) * viewDistance;
-
-            RaycastHit2D raycastHit2D = Physics2D.Raycast(origin, GetVectorFromAngle(angle), viewDistance, layerMask);
-
-            if (raycastHit2D.collider == null)
-            {
-                vertex = origin + GetVectorFromAngle(angle) * viewDistance;
-            }
-            else
-            {
-                vertex = raycastHit2D.point;
-            }
+            vertex = origin + GetVectorFromAngle(angle) * viewDistance;
 
             vertices[vertexIndex] = vertex;
 
@@ -63,6 +60,13 @@ public class FieldOfView : MonoBehaviour
             vertexIndex++;
 
             angle -= angleIncrease;
+
+            //RaycastHit2D raycastHit2D = Physics2D.Raycast(enemyPosition, GetVectorFromAngle(angle), viewDistance, layerMask);
+
+            //if (raycastHit2D.collider != null)
+            //{
+            //    GameManager.Instance.GameOver();
+            //}
         }
 
         mesh.vertices = vertices;
@@ -89,6 +93,11 @@ public class FieldOfView : MonoBehaviour
     public void SetOrigin(Vector3 origin)
     {
         this.origin = origin;
+    }
+
+    public void SetEnemyPosition(Vector3 enemyPosition)
+    {
+        this.enemyPosition = enemyPosition;
     }
 
     public void SetAimDirection(Vector3 aimDirection)
